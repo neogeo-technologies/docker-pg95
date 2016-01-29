@@ -3,9 +3,11 @@
 #
 # Originally written for Fedora-Dockerfiles by
 #   scollier <scollier@redhat.com>
+# Adapted by Guillaume Sueur <guillaume.sueur@neogeo-online.net>
+# https://github.com/neogeo-technologies/docker-pg95
 
 FROM centos:centos7
-MAINTAINER The CentOS Project <cloud-ops@centos.org>
+MAINTAINER Guillaume SUEUR - Neogeo Technologies
 
 ENV PGDATA /data
 ENV SUPERUSER admin 
