@@ -1,0 +1,18 @@
+pg95_data:
+    image:
+        neogeo/docker-pg95
+    volumes:
+        - /data
+    command:
+        echo "Data container for PostgreSQL 9.5. Data volume /data"
+pg95_server:
+    image:
+        neogeo/docker-pg95
+    environment:
+        PGDATA: /data
+        SUPERUSER: neogeo
+        # SUPERPASS: yourpassword (see logs for randomly generated pwd)
+    volumes_from:
+        - pg95_data
+    ports:
+        - "5432:5432"
