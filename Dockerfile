@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER The CentOS Project <cloud-ops@centos.org>
+MAINTAINER Neogeo Technologies http://www.neogeo-online.net
 
 RUN yum -y update; yum clean all
 RUN yum -y install sudo epel-release; yum clean all
