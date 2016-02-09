@@ -9,7 +9,7 @@ pg95_server:
     image:
         neogeo/docker-pg95
     environment:
-        PGDATA: /data
+        DATADIR: /data
         SUPERUSER: neogeo
         # SUPERPASS: yourpassword (see logs for randomly generated pwd)
     volumes_from:

@@ -12,7 +12,7 @@ RUN yum -y install postgresql95-server postgresql95; yum clean all
 RUN curl -L https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 -o /usr/local/sbin/gosu; \
    chmod 0755 /usr/local/sbin/gosu
    
-ENV PGDATA /data
+ENV DATADIR /data
 ENV SUPERUSER neogeo
 # ENV SUPERPASS neogeo
 
@@ -21,7 +21,7 @@ ADD scripts /scripts
 RUN chmod +x /scripts/*.sh
 RUN touch /.firstrun
 
-VOLUME [${PGDATA}]
+VOLUME [${DATADIR}]
 EXPOSE 5432
 
 CMD ["/scripts/run.sh"]

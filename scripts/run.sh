@@ -8,21 +8,21 @@ PASS=${SUPERPASS:-$(pwgen -s -1 16)}
 if [ ! -f $PGDATA/postgresql.conf ]; then
 	echo "SUPERUSER: \"$SUPERUSER\""
 	echo "SUPERPASS: \"$PASS\""
-	echo "PGDATA: \"$PGDATA\""
+	echo "DATADIR: \"$DATADIR\""
 	echo "...Data dir creation..."
-    mkdir -p $PGDATA
-    chown postgres:postgres $PGDATA
+    mkdir -p $DATADIR
+    chown postgres:postgres $DATADIR
 
 	echo "...Database config..."
-#	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale en_US.UTF-8 -D ${PGDATA}
-	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale fr_FR.UTF-8 -D ${PGDATA}
-	echo "host    all             all             0.0.0.0/0               md5" >> ${PGDATA}/pg_hba.conf
-	echo "local all postgres trust" >> $PGDATA/pg_hba.conf
-	echo "listen_addresses='*'" >> ${PGDATA}/postgresql.conf
+#	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale en_US.UTF-8 -D ${DATADIR}
+	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale fr_FR.UTF-8 -D ${DATADIR}
+	echo "host    all             all             0.0.0.0/0               md5" >> ${DATADIR}/pg_hba.conf
+	echo "local all postgres trust" >> $DATADIR/pg_hba.conf
+	echo "listen_addresses='*'" >> ${DATADIR}/postgresql.conf
 fi
 
-gosu postgres chown -R postgres:postgres $PGDATA
-gosu postgres chmod -R 700 $PGDATA
+gosu postgres chown -R postgres:postgres $DATADIR
+gosu postgres chmod -R 700 $DATADIR
 
 # Initialize first run
 if [[ -e /.firstrun ]]; then
