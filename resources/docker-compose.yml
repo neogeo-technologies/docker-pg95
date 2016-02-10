@@ -1,13 +1,13 @@
 pg95_data:
     image:
-        neogeo/posgresql95
+        neogeo/postgresql
     volumes:
         - /data
     command:
         echo "Data container for PostgreSQL 9.5. Data volume /data"
 pg95_server:
     image:
-        neogeo/posgresql95
+        neogeo/postgresql
     environment:
         DATADIR: /data
         SUPERUSER: neogeo
