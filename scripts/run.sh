@@ -3,26 +3,28 @@
 # If the superuser password is not defnied in an environment variable
 # it is randomly generated
 PASS=${SUPERPASS:-$(pwgen -s -1 16)}
+PGDATA=$DATADIR
+export PGDATA
 
 # Initialize data directory
 if [ ! -f $PGDATA/postgresql.conf ]; then
 	echo "SUPERUSER: \"$SUPERUSER\""
 	echo "SUPERPASS: \"$PASS\""
-	echo "DATADIR: \"$DATADIR\""
+	echo "DATADIR: \"$PGDATA\""
 	echo "...Data dir creation..."
-    mkdir -p $DATADIR
-    chown postgres:postgres $DATADIR
+    mkdir -p $PGDATA
+    chown postgres:postgres $PGDATA
 
 	echo "...Database config..."
-#	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale en_US.UTF-8 -D ${DATADIR}
-	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale fr_FR.UTF-8 -D ${DATADIR}
-	echo "host    all             all             0.0.0.0/0               md5" >> ${DATADIR}/pg_hba.conf
-	echo "local all postgres trust" >> $DATADIR/pg_hba.conf
-	echo "listen_addresses='*'" >> ${DATADIR}/postgresql.conf
+#	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale en_US.UTF-8 -D ${PGDATA}
+	gosu postgres /usr/pgsql-9.5/bin/initdb -E utf8 --locale fr_FR.UTF-8 -D ${PGDATA}
+	echo "host    all             all             0.0.0.0/0               md5" >> ${PGDATA}/pg_hba.conf
+	echo "local all postgres trust" >> $PGDATA/pg_hba.conf
+	echo "listen_addresses='*'" >> ${PGDATA}/postgresql.conf
 fi
 
-gosu postgres chown -R postgres:postgres $DATADIR
-gosu postgres chmod -R 700 $DATADIR
+gosu postgres chown -R postgres:postgres $PGDATA
+gosu postgres chmod -R 700 $PGDATA
 
 # Initialize first run
 if [[ -e /.firstrun ]]; then
